@@ -1178,8 +1178,8 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 65408353091101980, guid: 79772b60b8c1a0344a6e898101c1bfb5, type: 3}
-      propertyPath: splitMoveToPlayerSpeed
-      value: 150
+      propertyPath: comboToBig
+      value: 0.1
       objectReference: {fileID: 0}
     - target: {fileID: 3220302217457735744, guid: 79772b60b8c1a0344a6e898101c1bfb5, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1224,10 +1224,6 @@ PrefabInstance:
     - target: {fileID: 6483794144087633569, guid: 79772b60b8c1a0344a6e898101c1bfb5, type: 3}
       propertyPath: m_Name
       value: Player
-      objectReference: {fileID: 0}
-    - target: {fileID: 7880244633998505174, guid: 79772b60b8c1a0344a6e898101c1bfb5, type: 3}
-      propertyPath: moveSpeed
-      value: 700
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

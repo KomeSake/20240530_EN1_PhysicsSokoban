@@ -179,7 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDir: {x: 0, y: 0, z: 0}
-  moveSpeed: 20
+  moveSpeed: 700
 --- !u!114 &65408353091101980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -193,3 +193,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   splitPrefab: {fileID: 6483794144087633569, guid: 9b8b19d7cd4f090469891a3eaa4656fc, type: 3}
+  bornToSmall: 0.1
+  smallMax: 0.5
+  splitMoveToPlayerSpeed: 150
