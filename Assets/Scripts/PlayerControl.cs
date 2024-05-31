@@ -48,7 +48,7 @@ public class PlayerControl : MonoBehaviour
     }
     private void OnCollisionStay(Collision other)
     {
-        if (other.transform.CompareTag("Floor"))
+        if (other.transform.CompareTag("Floor") || other.transform.CompareTag("Flag"))
         {
             isGround = true;
         }
@@ -56,7 +56,7 @@ public class PlayerControl : MonoBehaviour
     private void OnCollisionExit(Collision other)
     {
 
-        if (other.transform.CompareTag("Floor"))
+        if (other.transform.CompareTag("Floor") || other.transform.CompareTag("Flag"))
         {
             isGround = false;
         }

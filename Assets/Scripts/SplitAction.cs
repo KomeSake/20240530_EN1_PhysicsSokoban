@@ -22,7 +22,8 @@ public class SplitAction : MonoBehaviour
     }
     private void Start()
     {
-        // playerControl.enabled = false;
+        //Start里面就不应该写一些会改变物体变量的东西，因为这会导致物体生成后和预想的不一致！！！！
+        // playerControl.enabled = false;   
         // meshRenderer.material = materialSleep;
     }
     private void Update()
