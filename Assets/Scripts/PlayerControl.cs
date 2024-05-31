@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 public class PlayerControl : MonoBehaviour
 {
     public PlayerInputSystem inputActions;
@@ -9,6 +8,7 @@ public class PlayerControl : MonoBehaviour
     private Rigidbody rig;
     public Vector3 moveDir;
     public float moveSpeed;
+    public bool isGround;
 
 
     private void Awake()
@@ -20,6 +20,8 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
+        //根据大小来确定推动力的速度
+
         //Move
         moveDir.x = inputActions.Player.Move.ReadValue<Vector2>().x;
         moveDir.z = inputActions.Player.Move.ReadValue<Vector2>().y;
@@ -39,9 +41,24 @@ public class PlayerControl : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (moveDir.sqrMagnitude > 0.1f)
+        if (moveDir.sqrMagnitude > 0.1f && isGround)
         {
             rig.AddForce(moveSpeed * moveDir * Time.deltaTime);
+        }
+    }
+    private void OnCollisionStay(Collision other)
+    {
+        if (other.transform.CompareTag("Floor"))
+        {
+            isGround = true;
+        }
+    }
+    private void OnCollisionExit(Collision other)
+    {
+
+        if (other.transform.CompareTag("Floor"))
+        {
+            isGround = false;
         }
     }
 

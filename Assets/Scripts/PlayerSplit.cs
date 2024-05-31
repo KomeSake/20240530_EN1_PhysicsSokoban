@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.InputSystem;
 public class PlayerSplit : MonoBehaviour
 {
     public GameObject splitPrefab;
+    private Rigidbody rig;
     private HashSet<Transform> splitObjs = new();
     private HashSet<Transform> objectToRemove = new();
 
@@ -14,11 +14,18 @@ public class PlayerSplit : MonoBehaviour
     public float smallMax;
     public float splitMoveToPlayerSpeed;
 
-    //private BoxCollider boxCollider;
-
+    private void Awake()
+    {
+        rig = GetComponent<Rigidbody>();
+    }
     private void Start()
     {
-        //boxCollider = GetComponent<BoxCollider>();
+    }
+
+    private void Update()
+    {
+        //根据大小来确定质量和推动的力
+        rig.mass = transform.localScale.x;
     }
     public void BornSplit()
     {
@@ -27,10 +34,11 @@ public class PlayerSplit : MonoBehaviour
             return;
         transform.localScale -= new Vector3(bornToSmall, bornToSmall, bornToSmall);
 
-        Vector3 bornPos = transform.position + new Vector3(0, 3, 0);
+        Vector3 bornPos = transform.position + new Vector3(0, transform.localScale.y + 1, 0);
         GameObject obj = Instantiate(splitPrefab, bornPos, Quaternion.identity);
+        SplitAction splitAction = obj.GetComponent<SplitAction>();
+        splitAction.WakeUpFunc();
         splitObjs.Add(obj.transform);
-
     }
 
     public void MoveToPlayer()
@@ -61,5 +69,19 @@ public class PlayerSplit : MonoBehaviour
             }
             objectToRemove.Clear();
         }
+    }
+
+    public void AddSplitInList(Transform transform)
+    {
+        splitObjs.Add(transform);
+    }
+
+    private void OnEnable()
+    {
+        SplitAction.OnSplitWakeUp += AddSplitInList;
+    }
+    private void OnDisable()
+    {
+        SplitAction.OnSplitWakeUp -= AddSplitInList;
     }
 }

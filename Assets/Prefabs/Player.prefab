@@ -34,7 +34,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0.84, y: 3, z: -1.22}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -66,7 +66,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 7b61d161b5f27a84d8886770eedd854e, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -118,7 +118,7 @@ Rigidbody:
   m_GameObject: {fileID: 6483794144087633569}
   serializedVersion: 4
   m_Mass: 1
-  m_Drag: 0
+  m_Drag: 1
   m_AngularDrag: 5
   m_CenterOfMass: {x: 0, y: 0, z: 0}
   m_InertiaTensor: {x: 1, y: 1, z: 1}
@@ -135,7 +135,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 0
+  m_CollisionDetection: 2
 --- !u!114 &4474965474795725763
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -180,6 +180,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveDir: {x: 0, y: 0, z: 0}
   moveSpeed: 700
+  isGround: 0
 --- !u!114 &65408353091101980
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -194,5 +195,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   splitPrefab: {fileID: 6483794144087633569, guid: 9b8b19d7cd4f090469891a3eaa4656fc, type: 3}
   bornToSmall: 0.1
+  comboToBig: 0.1
   smallMax: 0.5
   splitMoveToPlayerSpeed: 150
