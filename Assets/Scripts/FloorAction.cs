@@ -9,6 +9,12 @@ public class FloorAction : MonoBehaviour
 
     public void DoorOpen()
     {
-        transform.position += new Vector3(-doorSpeed * Time.deltaTime, 0, 0);
+        if (door.transform.position.x < 10.5f)
+            door.transform.position += new Vector3(doorSpeed * Time.deltaTime, 0, 0);
+    }
+    public void DoorClose()
+    {
+        if (door.transform.position.x > 8.5f)
+            door.transform.position -= new Vector3(doorSpeed * Time.deltaTime, 0, 0);
     }
 }

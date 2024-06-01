@@ -8,6 +8,7 @@ TagManager:
   - Floor
   - PlayerSplit
   - Flag
+  - FlagMain
   layers:
   - Default
   - TransparentFX
