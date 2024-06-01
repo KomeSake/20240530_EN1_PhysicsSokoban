@@ -25,7 +25,7 @@ public class PlayerSplit : MonoBehaviour
     private void Update()
     {
         //根据大小来确定质量和推动的力
-        rig.mass = transform.localScale.x;
+        //rig.mass = transform.localScale.x;
     }
     public void BornSplit()
     {

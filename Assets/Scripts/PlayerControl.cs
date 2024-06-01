@@ -46,7 +46,7 @@ public class PlayerControl : MonoBehaviour
             }
             //摄像机控制
             cameraTrans.position = new Vector3(cameraTrans.position.z, transform.position.y + 9.5f, cameraTrans.position.z);
-            //TODO:摄像机的控制还不是很好，而且球的位置需要加一个线性插值比较好
+            //TODO:摄像机的控制还不是很好，而且球的位置需要加一个线性
         }
     }
 
@@ -54,7 +54,21 @@ public class PlayerControl : MonoBehaviour
     {
         if (moveDir.sqrMagnitude > 0.1f && isGround)
         {
-            rig.AddForce(moveSpeed * moveDir * Time.deltaTime);
+            if (transform.CompareTag("Player"))
+            {
+                if (transform.localScale.x <= 1)
+                {
+                    rig.AddForce(transform.localScale.x * 700 * moveSpeed * moveDir * Time.deltaTime);
+                }
+                else
+                {
+                    rig.AddForce(transform.localScale.x * 1500 * moveSpeed * moveDir * Time.deltaTime);
+                }
+            }
+            else
+            {
+                rig.AddForce(700 * moveDir * Time.deltaTime);
+            }
         }
     }
     private void OnCollisionStay(Collision other)

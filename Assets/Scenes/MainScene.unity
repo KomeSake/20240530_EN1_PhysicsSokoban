@@ -383,6 +383,7 @@ GameObject:
   m_Component:
   - component: {fileID: 796534965}
   - component: {fileID: 796534966}
+  - component: {fileID: 796534967}
   m_Layer: 0
   m_Name: ScenesManager
   m_TagString: Untagged
@@ -419,14 +420,33 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2137779571}
   floorAction: {fileID: 1014698406}
-  sceneMain: {fileID: 102900000, guid: 9fc0d4010bbf28b4594072e72b8655ab, type: 3}
-  sceneAsset01: {fileID: 102900000, guid: 4418389ae0bb0814e8214efe32703a0c, type: 3}
-  sceneAsset02: {fileID: 102900000, guid: 6c0450f2a5f6f0c48b44f71946171f57, type: 3}
+  isManual: 0
   isClear: 0
   isRestart: 0
   isRestartData: 0
-  currentLevel: 0
+  currentLevel: 1
   levelMax: 2
+--- !u!65 &796534967
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 796534964}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 5, y: 1, z: 5}
+  m_Center: {x: 8.5, y: -11, z: -4}
 --- !u!1 &897609496
 GameObject:
   m_ObjectHideFlags: 0
@@ -706,8 +726,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   splitPrefab: {fileID: 6483794144087633569, guid: 9b8b19d7cd4f090469891a3eaa4656fc, type: 3}
-  bornToSmall: 0.1
-  comboToBig: 0.1
+  bornToSmall: 0.2
+  comboToBig: 0.2
   smallMax: 0.5
   splitMoveToPlayerSpeed: 150
 --- !u!114 &2137779565
@@ -724,7 +744,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTrans: {fileID: 963194228}
   moveDir: {x: 0, y: 0, z: 0}
-  moveSpeed: 700
+  moveSpeed: 1
   isGround: 0
 --- !u!114 &2137779566
 MonoBehaviour:

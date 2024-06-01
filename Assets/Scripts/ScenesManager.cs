@@ -12,12 +12,8 @@ public class ScenesManager : MonoBehaviour
     public FloorAction floorAction;
     private AsyncOperation loadedScene;
     private string scencName = "Scene0";
-    public SceneAsset sceneMain;
-    public SceneAsset sceneAsset01;
-    public SceneAsset sceneAsset02;
-    public SceneAsset sceneAsset03;
-    public SceneAsset sceneAsset04;
     [Header("属性")]
+    public bool isManual;
     public bool isClear;
     public bool isRestart;
     public bool isRestartData;
@@ -25,9 +21,19 @@ public class ScenesManager : MonoBehaviour
     public int levelMax;
     private void Start()
     {
-        currentLevel = 1;
-        flagMain = FindObjInScene(sceneAsset01.name, "FlagMain");
-        LoadChildObjInList(flagMain, flagArray);
+        if (isManual)
+        {
+            flagMain = FindObjInScene(scencName + currentLevel, "FlagMain");
+            LoadChildObjInList(flagMain, flagArray);
+        }
+        else
+        {
+            loadedScene = LoadScene(scencName + currentLevel);
+            // flagMain = FindObjInScene("Scene01", "FlagMain");
+            // LoadChildObjInList(flagMain, flagArray);
+            isRestart = true;
+            isRestartData = true;
+        }
     }
     private void Update()
     {

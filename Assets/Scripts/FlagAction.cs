@@ -20,7 +20,7 @@ public class FlagAction : MonoBehaviour
     private void OnTriggerStay(Collider other)
     {
 
-        if (other.transform.CompareTag("Player") || other.transform.CompareTag("Box") || other.transform.CompareTag("PlayerSplit"))
+        if (other.transform.CompareTag("Box"))
         {
             isFlag = true;
             meshRenderer.material = material_on;
@@ -29,7 +29,7 @@ public class FlagAction : MonoBehaviour
     }
     private void OnTriggerExit(Collider other)
     {
-        if (other.transform.CompareTag("Player") || other.transform.CompareTag("Box") || other.transform.CompareTag("PlayerSplit"))
+        if (other.transform.CompareTag("Box"))
         {
             isFlag = false;
             meshRenderer.material = material_off;
