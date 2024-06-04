@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEditor;
@@ -6,6 +7,7 @@ using UnityEngine.SceneManagement;
 
 public class ScenesManager : MonoBehaviour
 {
+    public static event Action OnNextLevel;
     private GameObject flagMain;
     private List<GameObject> flagArray = new();
     public Transform player;
@@ -15,27 +17,47 @@ public class ScenesManager : MonoBehaviour
     [Header("属性")]
     public bool isManual;
     public bool isClear;
-    public bool isRestart;
-    public bool isRestartData;
+    private bool isRestart;
+    private bool isRestartData;
+    private bool isRestartLevel;
     public int currentLevel;
     public int levelMax;
     private void Start()
     {
+        //手动模式，需要搭配currentLevel来调整关卡
         if (isManual)
         {
             flagMain = FindObjInScene(scencName + currentLevel, "FlagMain");
             LoadChildObjInList(flagMain, flagArray);
         }
-        else
+        else//Build模式，不要忘记关闭手动模式和关卡调整为1
         {
             loadedScene = LoadScene(scencName + currentLevel);
-            // flagMain = FindObjInScene("Scene01", "FlagMain");
-            // LoadChildObjInList(flagMain, flagArray);
             isRestart = true;
             isRestartData = true;
         }
     }
     private void Update()
+    {
+        if (isRestartLevel)
+        {
+            SphereCollider coll = player.GetComponent<SphereCollider>();
+            coll.enabled = false;
+            if (player.position.y <= -10)
+            {
+                isRestart = true;
+            }
+            if (player.position.y >= 60)
+            {
+                coll.enabled = true;
+                isRestartLevel = false;
+            }
+        }
+        ClearCheck();
+    }
+
+    //通关检查
+    private void ClearCheck()
     {
         //检查是否可以过关了
         if (!isRestart)
@@ -57,11 +79,15 @@ public class ScenesManager : MonoBehaviour
         {
             if (!isRestartData)
             {
+                OnNextLevel?.Invoke();
                 isClear = false;
                 UnLoadScene(scencName + currentLevel);
-                currentLevel++;
-                if (currentLevel > levelMax)
-                    currentLevel = 1;
+                if (!isRestartLevel)
+                {
+                    currentLevel++;
+                    if (currentLevel > levelMax)
+                        currentLevel = 1;
+                }
                 loadedScene = LoadScene(scencName + currentLevel);
                 isRestartData = true;
             }
@@ -78,6 +104,12 @@ public class ScenesManager : MonoBehaviour
             }
         }
     }
+
+    public void LevelRestart()
+    {
+        isRestartLevel = true;
+    }
+
     public AsyncOperation LoadScene(string sceneName)
     {
         return SceneManager.LoadSceneAsync(sceneName, LoadSceneMode.Additive);
@@ -109,7 +141,17 @@ public class ScenesManager : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.transform.CompareTag("Player"))
+        if (other.transform.CompareTag("Player") && !isRestartLevel)
             isRestart = true;
+    }
+
+    private void OnEnable()
+    {
+        PlayerControl.OnRestartLevel += LevelRestart;
+    }
+
+    private void OnDisable()
+    {
+        PlayerControl.OnRestartLevel -= LevelRestart;
     }
 }

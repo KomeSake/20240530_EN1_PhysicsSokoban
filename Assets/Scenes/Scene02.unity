@@ -137,7 +137,7 @@ GameObject:
   - component: {fileID: 104992506}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Floor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -929,21 +929,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: Box
       objectReference: {fileID: 0}
-    - target: {fileID: 3862139548619440803, guid: 67f872b65e033a9458557fb41dcb209c, type: 3}
-      propertyPath: m_Mass
-      value: 20
-      objectReference: {fileID: 0}
     - target: {fileID: 8348648508935431810, guid: 67f872b65e033a9458557fb41dcb209c, type: 3}
       propertyPath: m_LocalScale.x
-      value: 3
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 8348648508935431810, guid: 67f872b65e033a9458557fb41dcb209c, type: 3}
       propertyPath: m_LocalScale.y
-      value: 3
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 8348648508935431810, guid: 67f872b65e033a9458557fb41dcb209c, type: 3}
       propertyPath: m_LocalScale.z
-      value: 3
+      value: 1.7
       objectReference: {fileID: 0}
     - target: {fileID: 8348648508935431810, guid: 67f872b65e033a9458557fb41dcb209c, type: 3}
       propertyPath: m_LocalPosition.x

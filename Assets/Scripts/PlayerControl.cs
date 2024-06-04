@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
+    public static event Action OnRestartLevel;
     public PlayerInputSystem inputActions;
     private PlayerSplit playerSplit;
     private Rigidbody rig;
@@ -43,6 +45,12 @@ public class PlayerControl : MonoBehaviour
             if (transform.position.y <= -20)
             {
                 transform.position = new Vector3(8.5f, 60, -4);
+                transform.localScale = Vector3.one;
+            }
+            //关卡重置
+            if (inputActions.Player.Restart.triggered)
+            {
+                OnRestartLevel?.Invoke();
             }
             //摄像机控制
             cameraTrans.position = new Vector3(cameraTrans.position.z, transform.position.y + 9.5f, cameraTrans.position.z);
@@ -56,18 +64,11 @@ public class PlayerControl : MonoBehaviour
         {
             if (transform.CompareTag("Player"))
             {
-                if (transform.localScale.x <= 1)
-                {
-                    rig.AddForce(transform.localScale.x * 700 * moveSpeed * moveDir * Time.deltaTime);
-                }
-                else
-                {
-                    rig.AddForce(transform.localScale.x * 1500 * moveSpeed * moveDir * Time.deltaTime);
-                }
+                rig.AddForce(moveSpeed * Time.deltaTime * moveDir);
             }
             else
             {
-                rig.AddForce(700 * moveDir * Time.deltaTime);
+                rig.AddForce(moveSpeed * Time.deltaTime * moveDir);
             }
         }
     }

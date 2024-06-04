@@ -24,8 +24,8 @@ public class PlayerSplit : MonoBehaviour
 
     private void Update()
     {
-        //根据大小来确定质量和推动的力
-        //rig.mass = transform.localScale.x;
+        //根据大小来确定质量
+        rig.mass = transform.localScale.x;
     }
     public void BornSplit()
     {
@@ -71,6 +71,16 @@ public class PlayerSplit : MonoBehaviour
         }
     }
 
+    public void ClearAllSplits()
+    {
+        foreach (var item in splitObjs)
+        {
+            Destroy(item.gameObject);
+        }
+        splitObjs.Clear();
+        objectToRemove.Clear();
+    }
+
     public void AddSplitInList(Transform transform)
     {
         splitObjs.Add(transform);
@@ -79,9 +89,13 @@ public class PlayerSplit : MonoBehaviour
     private void OnEnable()
     {
         SplitAction.OnSplitWakeUp += AddSplitInList;
+        PlayerControl.OnRestartLevel += ClearAllSplits;
+        ScenesManager.OnNextLevel += ClearAllSplits;
     }
     private void OnDisable()
     {
         SplitAction.OnSplitWakeUp -= AddSplitInList;
+        PlayerControl.OnRestartLevel -= ClearAllSplits;
+        ScenesManager.OnNextLevel -= ClearAllSplits;
     }
 }

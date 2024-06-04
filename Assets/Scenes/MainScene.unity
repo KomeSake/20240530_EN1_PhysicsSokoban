@@ -420,11 +420,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 2137779571}
   floorAction: {fileID: 1014698406}
-  isManual: 0
+  isManual: 1
   isClear: 0
-  isRestart: 0
-  isRestartData: 0
-  currentLevel: 1
+  currentLevel: 2
   levelMax: 2
 --- !u!65 &796534967
 BoxCollider:
@@ -744,7 +742,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cameraTrans: {fileID: 963194228}
   moveDir: {x: 0, y: 0, z: 0}
-  moveSpeed: 1
+  moveSpeed: 700
   isGround: 0
 --- !u!114 &2137779566
 MonoBehaviour:
@@ -1011,7 +1009,7 @@ SceneRoots:
   - {fileID: 705507995}
   - {fileID: 1982402922}
   - {fileID: 796534965}
+  - {fileID: 897609497}
   - {fileID: 2137779571}
   - {fileID: 994662603270468711}
   - {fileID: 4064987524577974186}
-  - {fileID: 897609497}

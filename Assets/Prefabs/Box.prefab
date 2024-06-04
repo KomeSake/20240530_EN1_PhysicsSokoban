@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1909480042728367296}
   - component: {fileID: 3100366605489390775}
   - component: {fileID: 3862139548619440803}
+  - component: {fileID: 5069926080781940431}
   m_Layer: 0
   m_Name: Box
   m_TagString: Box
@@ -31,7 +32,7 @@ Transform:
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_ConstrainProportionsScale: 1
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -133,3 +134,17 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &5069926080781940431
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2117019708278770988}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a2b724ec5db68a947a638233adde8562, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  massEqual: {fileID: 13400000, guid: 89a966138f8c55f4e828f54802b0b252, type: 2}
+  massSmall: {fileID: 13400000, guid: 64d53fb0b8b8c4b49a575b1f4dc0026a, type: 2}
