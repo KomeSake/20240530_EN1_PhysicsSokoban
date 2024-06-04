@@ -1,8 +1,10 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public class PlayerSplit : MonoBehaviour
 {
+    public static event Action<PlayerParticle.ParitcleName> OnComboSplit;
     public GameObject splitPrefab;
     private Rigidbody rig;
     private HashSet<Transform> splitObjs = new();
@@ -59,6 +61,8 @@ public class PlayerSplit : MonoBehaviour
                     objectToRemove.Add(it);
                     Destroy(it.gameObject);
                     transform.localScale += new Vector3(comboToBig, comboToBig, comboToBig);
+                    OnComboSplit?.Invoke(PlayerParticle.ParitcleName.comboSplit);
+
                 }
             }
 
