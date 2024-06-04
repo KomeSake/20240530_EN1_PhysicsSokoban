@@ -34,7 +34,7 @@ public class PlayerSplit : MonoBehaviour
             return;
         transform.localScale -= new Vector3(bornToSmall, bornToSmall, bornToSmall);
 
-        Vector3 bornPos = transform.position + new Vector3(0, transform.localScale.y + 1, 0);
+        Vector3 bornPos = transform.position + new Vector3(0, transform.localScale.y + splitPrefab.transform.localScale.x, 0);
         GameObject obj = Instantiate(splitPrefab, bornPos, Quaternion.identity);
         SplitAction splitAction = obj.GetComponent<SplitAction>();
         splitAction.WakeUpFunc();

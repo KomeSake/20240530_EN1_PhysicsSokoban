@@ -5,6 +5,7 @@ using UnityEngine;
 public class PlayerControl : MonoBehaviour
 {
     public static event Action OnRestartLevel;
+    public static event Action<PlayerParticle.ParitcleName> OnBornSplit;
     public PlayerInputSystem inputActions;
     private PlayerSplit playerSplit;
     private Rigidbody rig;
@@ -32,7 +33,11 @@ public class PlayerControl : MonoBehaviour
         {
             //BornSplit
             if (inputActions.Player.Actions_split.triggered)
+            {
+                if (transform.localScale.x >= playerSplit.smallMax)
+                    OnBornSplit?.Invoke(PlayerParticle.ParitcleName.bornSplit);
                 playerSplit.BornSplit();
+            }
             //MoveToPlayer 
             if (inputActions.Player.Actions_Combo.ReadValue<float>() > 0)
                 playerSplit.MoveToPlayer();
