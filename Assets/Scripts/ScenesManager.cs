@@ -8,10 +8,11 @@ using UnityEngine.SceneManagement;
 public class ScenesManager : MonoBehaviour
 {
     public static event Action OnNextLevel;
+    public static event Action OnClearLevel;
+    public static event Action OnNoClearLevel;
     private GameObject flagMain;
     private List<GameObject> flagArray = new();
     public Transform player;
-    public FloorAction floorAction;
     private AsyncOperation loadedScene;
     private string scencName = "Scene0";
     [Header("属性")]
@@ -71,9 +72,9 @@ public class ScenesManager : MonoBehaviour
                     isClear = false;
             }
             if (isClear)
-                floorAction.DoorOpen();
+                OnClearLevel?.Invoke();
             else
-                floorAction.DoorClose();
+                OnNoClearLevel?.Invoke();
         }
         else
         {

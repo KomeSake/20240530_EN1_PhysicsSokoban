@@ -24,8 +24,6 @@ public class PlayerControl : MonoBehaviour
 
     private void Update()
     {
-        //根据大小来确定推动力的速度
-
         //Move
         moveDir.x = inputActions.Player.Move.ReadValue<Vector2>().x;
         moveDir.z = inputActions.Player.Move.ReadValue<Vector2>().y;
@@ -44,17 +42,20 @@ public class PlayerControl : MonoBehaviour
             //位置重生检查
             if (transform.position.y < 0 && transform.position.y > -0.1f)
             {
+                //将角度和速度变小，防止乱飞
                 rig.velocity = Vector3.down * 5;
                 rig.angularVelocity = Vector3.zero;
             }
             if (transform.position.y <= -20)
             {
+                //将大小和位置也固定，保证可以飞到固定位置
                 transform.position = new Vector3(8.5f, 60, -4);
                 transform.localScale = Vector3.one;
             }
             //关卡重置
             if (inputActions.Player.Restart.triggered)
             {
+                isGround = false;
                 OnRestartLevel?.Invoke();
             }
             //摄像机控制
