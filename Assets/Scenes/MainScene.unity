@@ -10333,7 +10333,7 @@ MonoBehaviour:
   isManual: 1
   isClear: 0
   isAllClear: 0
-  currentLevel: 7
+  currentLevel: 9
   levelMax: 10
 --- !u!65 &796534967
 BoxCollider:
@@ -11418,7 +11418,7 @@ Transform:
   m_GameObject: {fileID: 2137779563}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 7.35, y: 2, z: -2.48}
+  m_LocalPosition: {x: 7.64, y: 2, z: -3.75}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
