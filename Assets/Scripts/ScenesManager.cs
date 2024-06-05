@@ -15,9 +15,11 @@ public class ScenesManager : MonoBehaviour
     public Transform player;
     private AsyncOperation loadedScene;
     private string scencName = "Scene0";
+    public Transform playerGold;
     [Header("属性")]
     public bool isManual;
     public bool isClear;
+    public bool isAllClear;
     private bool isRestart;
     private bool isRestartData;
     private bool isRestartLevel;
@@ -56,6 +58,17 @@ public class ScenesManager : MonoBehaviour
         }
         ClearCheck();
     }
+    private void LateUpdate()
+    {
+        //通关后激活皇冠
+        if (isAllClear && !playerGold.gameObject.activeSelf)
+        {
+            playerGold.gameObject.SetActive(true);
+        }
+        //皇冠的位置
+        Vector3 localYAxis = playerGold.TransformDirection(Vector3.up);
+        playerGold.position = player.position + 0.7f * player.localScale.x * localYAxis;
+    }
 
     //通关检查
     private void ClearCheck()
@@ -63,14 +76,17 @@ public class ScenesManager : MonoBehaviour
         //检查是否可以过关了
         if (!isRestart)
         {
+            int flagSum = flagArray.Count;
             foreach (var item in flagArray)
             {
                 FlagAction flagAction = item.GetComponent<FlagAction>();
                 if (flagAction.isFlag)
-                    isClear = true;
-                else
-                    isClear = false;
+                    flagSum--;
             }
+            if (flagSum <= 0)
+                isClear = true;
+            else
+                isClear = false;
             if (isClear)
                 OnClearLevel?.Invoke();
             else
@@ -87,7 +103,10 @@ public class ScenesManager : MonoBehaviour
                 {
                     currentLevel++;
                     if (currentLevel > levelMax)
+                    {
                         currentLevel = 1;
+                        isAllClear = true;
+                    }
                 }
                 loadedScene = LoadScene(scencName + currentLevel);
                 isRestartData = true;

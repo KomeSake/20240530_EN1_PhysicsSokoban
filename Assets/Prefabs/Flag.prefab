@@ -120,8 +120,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ae60daae21a73b34483577e0c24a73ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  type: 0
   material_off: {fileID: 2100000, guid: f5cc86dbee89b564c8c5855073777ab8, type: 2}
   material_on: {fileID: 2100000, guid: 770df14e3bb7a564daaf13e858de5cae, type: 2}
+  material_off_sphere: {fileID: 2100000, guid: 76dc034b4d3b0c44b863ae0a6b081d99, type: 2}
+  material_on_sphere: {fileID: 2100000, guid: fef4a5cf77812a14590c0753fabcd12c, type: 2}
   pointLight: {fileID: 2622455389954037702}
   isFlag: 0
 --- !u!1 &2622455389954037702

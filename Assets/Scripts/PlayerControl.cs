@@ -1,7 +1,9 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.InputSystem;
 public class PlayerControl : MonoBehaviour
 {
     public static event Action OnRestartLevel;
@@ -9,9 +11,12 @@ public class PlayerControl : MonoBehaviour
     public PlayerInputSystem inputActions;
     private PlayerSplit playerSplit;
     private Rigidbody rig;
+    private MeshRenderer meshRenderer;
     public Transform cameraTrans;
     public Vector3 moveDir;
     public float moveSpeed;
+    public Material material_on;
+    public Material material_off;
     public bool isGround;
 
 
@@ -20,13 +25,31 @@ public class PlayerControl : MonoBehaviour
         inputActions = new PlayerInputSystem();
         playerSplit = GetComponent<PlayerSplit>();
         rig = GetComponent<Rigidbody>();
+        meshRenderer = GetComponent<MeshRenderer>();
     }
 
     private void Update()
     {
-        //Move
-        moveDir.x = inputActions.Player.Move.ReadValue<Vector2>().x;
-        moveDir.z = inputActions.Player.Move.ReadValue<Vector2>().y;
+        if (this.CompareTag("Player"))
+        {
+            if (inputActions.Player.Actions_onlyPlay.ReadValue<float>() <= 0)
+            {
+                //Move
+                moveDir.x = inputActions.Player.Move.ReadValue<Vector2>().x;
+                moveDir.z = inputActions.Player.Move.ReadValue<Vector2>().y;
+                meshRenderer.material = material_on;
+            }
+            else
+            {
+                meshRenderer.material = material_off;
+            }
+        }
+        else
+        {
+            //Move
+            moveDir.x = inputActions.Player.Move.ReadValue<Vector2>().x;
+            moveDir.z = inputActions.Player.Move.ReadValue<Vector2>().y;
+        }
         if (this.CompareTag("Player"))
         {
             //BornSplit
@@ -64,6 +87,12 @@ public class PlayerControl : MonoBehaviour
         }
     }
 
+    private void RestartVelactiy(InputAction.CallbackContext context)
+    {
+        rig.velocity = Vector3.zero;
+        moveDir = Vector3.zero;
+    }
+
     private void FixedUpdate()
     {
         if (moveDir.sqrMagnitude > 0.1f && isGround)
@@ -80,7 +109,7 @@ public class PlayerControl : MonoBehaviour
     }
     private void OnCollisionStay(Collision other)
     {
-        if (other.transform.CompareTag("Floor") || other.transform.CompareTag("Flag"))
+        if (other.transform.CompareTag("Floor") || other.transform.CompareTag("Flag") || other.transform.CompareTag("Box") || other.transform.CompareTag("PlayerSplit"))
         {
             isGround = true;
         }
@@ -88,7 +117,7 @@ public class PlayerControl : MonoBehaviour
     private void OnCollisionExit(Collision other)
     {
 
-        if (other.transform.CompareTag("Floor") || other.transform.CompareTag("Flag"))
+        if (other.transform.CompareTag("Floor") || other.transform.CompareTag("Flag") || other.transform.CompareTag("Box") || other.transform.CompareTag("PlayerSplit"))
         {
             isGround = false;
         }
@@ -97,11 +126,13 @@ public class PlayerControl : MonoBehaviour
     private void OnEnable()
     {
         inputActions.Enable();
+        inputActions.Player.Actions_onlyPlay.performed += RestartVelactiy;
     }
 
     private void OnDisable()
     {
         inputActions.Disable();
+        inputActions.Player.Actions_onlyPlay.performed -= RestartVelactiy;
     }
 
 }

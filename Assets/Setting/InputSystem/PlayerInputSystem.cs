@@ -62,6 +62,15 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Actions_onlyPlay"",
+                    ""type"": ""Value"",
+                    ""id"": ""996616e2-dfba-4cb1-ae49-d7552832f323"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": true
                 }
             ],
             ""bindings"": [
@@ -216,6 +225,17 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""groups"": ""Keyboard&Mouse"",
                     ""action"": ""Restart"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5ba68a81-0932-47c2-b741-283be9a70b21"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": ""Keyboard&Mouse"",
+                    ""action"": ""Actions_onlyPlay"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -807,6 +827,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         m_Player_Actions_split = m_Player.FindAction("Actions_split", throwIfNotFound: true);
         m_Player_Actions_Combo = m_Player.FindAction("Actions_Combo", throwIfNotFound: true);
         m_Player_Restart = m_Player.FindAction("Restart", throwIfNotFound: true);
+        m_Player_Actions_onlyPlay = m_Player.FindAction("Actions_onlyPlay", throwIfNotFound: true);
         // UI
         m_UI = asset.FindActionMap("UI", throwIfNotFound: true);
         m_UI_Navigate = m_UI.FindAction("Navigate", throwIfNotFound: true);
@@ -884,6 +905,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Actions_split;
     private readonly InputAction m_Player_Actions_Combo;
     private readonly InputAction m_Player_Restart;
+    private readonly InputAction m_Player_Actions_onlyPlay;
     public struct PlayerActions
     {
         private @PlayerInputSystem m_Wrapper;
@@ -892,6 +914,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         public InputAction @Actions_split => m_Wrapper.m_Player_Actions_split;
         public InputAction @Actions_Combo => m_Wrapper.m_Player_Actions_Combo;
         public InputAction @Restart => m_Wrapper.m_Player_Restart;
+        public InputAction @Actions_onlyPlay => m_Wrapper.m_Player_Actions_onlyPlay;
         public InputActionMap Get() { return m_Wrapper.m_Player; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -913,6 +936,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Restart.started += instance.OnRestart;
             @Restart.performed += instance.OnRestart;
             @Restart.canceled += instance.OnRestart;
+            @Actions_onlyPlay.started += instance.OnActions_onlyPlay;
+            @Actions_onlyPlay.performed += instance.OnActions_onlyPlay;
+            @Actions_onlyPlay.canceled += instance.OnActions_onlyPlay;
         }
 
         private void UnregisterCallbacks(IPlayerActions instance)
@@ -929,6 +955,9 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
             @Restart.started -= instance.OnRestart;
             @Restart.performed -= instance.OnRestart;
             @Restart.canceled -= instance.OnRestart;
+            @Actions_onlyPlay.started -= instance.OnActions_onlyPlay;
+            @Actions_onlyPlay.performed -= instance.OnActions_onlyPlay;
+            @Actions_onlyPlay.canceled -= instance.OnActions_onlyPlay;
         }
 
         public void RemoveCallbacks(IPlayerActions instance)
@@ -1115,6 +1144,7 @@ public partial class @PlayerInputSystem: IInputActionCollection2, IDisposable
         void OnActions_split(InputAction.CallbackContext context);
         void OnActions_Combo(InputAction.CallbackContext context);
         void OnRestart(InputAction.CallbackContext context);
+        void OnActions_onlyPlay(InputAction.CallbackContext context);
     }
     public interface IUIActions
     {
