@@ -103,7 +103,7 @@ public class PlayerControl : MonoBehaviour
             if (inputActions.Player.Restart.triggered)
             {
                 isGround = false;
-                rig.velocity = Vector3.up * 5;
+                rig.velocity = Vector3.down;
                 rig.angularVelocity = Vector3.zero;
                 OnRestartLevel?.Invoke();
             }
