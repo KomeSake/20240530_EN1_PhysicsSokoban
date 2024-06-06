@@ -18,6 +18,13 @@ public class PlayerControl : MonoBehaviour
     public Material material_on;
     public Material material_off;
     public bool isGround;
+    [Header("重生位置调整")]
+    public Vector3 bornPos;
+    public float lerpTime;
+    private float currentLerpTime;
+    private bool isRestartBall;
+    private Vector3 restartPos;
+    private Vector3 restartScale;
 
 
     private void Awake()
@@ -27,7 +34,11 @@ public class PlayerControl : MonoBehaviour
         rig = GetComponent<Rigidbody>();
         meshRenderer = GetComponent<MeshRenderer>();
     }
-
+    private void Start()
+    {
+        restartPos = Vector3.zero;
+        restartScale = Vector3.one;
+    }
     private void Update()
     {
         if (this.CompareTag("Player"))
@@ -53,32 +64,47 @@ public class PlayerControl : MonoBehaviour
         if (this.CompareTag("Player"))
         {
             //BornSplit
-            if (inputActions.Player.Actions_split.triggered)
+            if (inputActions.Player.Actions_split.triggered && isGround)
             {
                 if (transform.localScale.x >= playerSplit.smallMax)
                     OnBornSplit?.Invoke(PlayerParticle.ParitcleName.bornSplit);
                 playerSplit.BornSplit();
             }
             //MoveToPlayer 
-            if (inputActions.Player.Actions_Combo.ReadValue<float>() > 0)
+            if (inputActions.Player.Actions_Combo.ReadValue<float>() > 0 && isGround)
                 playerSplit.MoveToPlayer();
-            //位置重生检查
-            if (transform.position.y < 0 && transform.position.y > -0.1f)
+            //位置重生检查(用碰撞体做了，所以搬到PlayerSlowly脚本了)
+            if (isGround)
             {
-                //将角度和速度变小，防止乱飞
-                rig.velocity = Vector3.down * 5;
-                rig.angularVelocity = Vector3.zero;
+                currentLerpTime = 0;
+                isRestartBall = false;
             }
+            //位置重生
             if (transform.position.y <= -20)
             {
+                isRestartBall = true;
+                transform.position = new Vector3(transform.position.x, bornPos.y, transform.position.z);
+                restartPos = transform.position;
+                restartScale = transform.localScale;
+            }
+            if (isRestartBall)
+            {
+                //做一个线性插值来让变化更平缓
                 //将大小和位置也固定，保证可以飞到固定位置
-                transform.position = new Vector3(8.5f, 60, -4);
-                transform.localScale = Vector3.one;
+                if (currentLerpTime < lerpTime)
+                {
+                    currentLerpTime += Time.deltaTime;
+                    float t = currentLerpTime / lerpTime;
+                    transform.position = new Vector3(Mathf.Lerp(restartPos.x, bornPos.x, t), transform.position.y, Mathf.Lerp(restartPos.z, bornPos.z, t));
+                    transform.localScale = Vector3.Lerp(restartScale, Vector3.one, t);
+                }
             }
             //关卡重置
             if (inputActions.Player.Restart.triggered)
             {
                 isGround = false;
+                rig.velocity = Vector3.up * 5;
+                rig.angularVelocity = Vector3.zero;
                 OnRestartLevel?.Invoke();
             }
             //摄像机控制

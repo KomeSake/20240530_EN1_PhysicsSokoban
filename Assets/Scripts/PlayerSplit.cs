@@ -20,10 +20,6 @@ public class PlayerSplit : MonoBehaviour
     {
         rig = GetComponent<Rigidbody>();
     }
-    private void Start()
-    {
-    }
-
     private void Update()
     {
         //根据大小来确定质量
